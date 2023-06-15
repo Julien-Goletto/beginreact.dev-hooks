@@ -41,11 +41,10 @@ const Username = ({ username, setUsername }) => {
 };
 
 // 🦁 Il faudra ajouter les props "favoriteAnimal" et "setFavoriteAnimal" ici !
-const FavoriteAnimal = () => {
+const FavoriteAnimal = ({ favoriteAnimal, setFavoriteAnimal }) => {
   // 🦁 Déplace ce state dans le composant "UserAnimalForm".
   // Tu dois déplacer ce state, car c'est un composant au dessus qui a besoin
   // De cette donnée.
-  const [favoriteAnimal, setFavoriteAnimal] = useState('Dog');
   return (
     <input
       type="text"
@@ -66,12 +65,29 @@ const Greeting = ({ favoriteAnimal, username }) => {
 // 🦁 Crée un nouveau composant nommé : "UserAnimalForm".
 // Dedans tu vas avoir toute la logique par rapport à la phrase concernant
 // le username et le favorite animal.
+const UserAnimalForm = () => {
+  const [favoriteAnimal, setFavoriteAnimal] = useState('Dog');
+  const [username, setUsername] = useState('');
+
+  return(
+    <div className="vertical-stack">
+        <h2>Animal !</h2>
+        <div>
+          <span>Favorite Animal</span>
+          <FavoriteAnimal favoriteAnimal={favoriteAnimal} setFavoriteAnimal={setFavoriteAnimal} />
+        </div>
+        <div>
+          <span>Username</span>
+          <Username username={username} setUsername={setUsername} />
+        </div>
+        <Greeting username={username} favoriteAnimal={favoriteAnimal} />
+      </div>
+  );
+}
 
 const App = () => {
   const [todos, setTodos] = useState(['Learn React', 'Learn React Hooks']);
   const [count, setCount] = useState(0);
-  // 🦁 Déplace ce state dans le composant "UserAnimalForm".
-  const [username, setUsername] = useState('');
 
   const addTodo = (todo) => {
     setTodos([...todos, todo]);
@@ -84,20 +100,8 @@ const App = () => {
       <TodoForm addTodo={addTodo} />
       <h2>Counter</h2>
       <Counter count={count} increment={() => setCount((p) => p + 1)} />
-      {/* 🦁 Déplace toute cette partie dans "UserAnimalForm" */}
-      <div className="vertical-stack">
-        <h2>Animal !</h2>
-        <div>
-          <span>Favorite Animal</span>
-          <FavoriteAnimal />
-        </div>
-        <div>
-          <span>Username</span>
-          <Username username={username} setUsername={setUsername} />
-        </div>
-        <Greeting username={username} />
+      <UserAnimalForm />
       </div>
-    </div>
   );
 };
 
