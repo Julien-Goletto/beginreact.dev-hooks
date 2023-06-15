@@ -24,6 +24,11 @@ const App = () => {
     return () => clearTimeout(delayDebounceFn)
   }, [name]);
 
+  const handleHistoryDeletion = (event) => {
+    console.log(event.target.dataset.key)
+    setNameHistory(nameHistory.filter((name, i) => i !== parseInt(event.target.dataset.key)));
+  }
+
   return (
     <div>
       <input
@@ -46,7 +51,14 @@ const App = () => {
       <ul>
         {
           nameHistory.map((name, i) => (
-            <li key={i}>{name}</li>
+            <li
+              style={{ cursor: 'pointer' }}
+              key={i}
+              data-key={i}
+              onClick={handleHistoryDeletion}
+            >
+              {name}
+            </li>
           ))
         }
       </ul>
