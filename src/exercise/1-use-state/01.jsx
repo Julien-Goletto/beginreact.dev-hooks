@@ -1,19 +1,28 @@
 // 🦁 add useState import
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const App = () => {
   // 🦁 Remplace le name par un state
   const [name, setName] = useState('');
   const [isReversed, setIsReversed] = useState(false);
-
+  const [nameHistory, setNameHistory] = useState([]);
+  
   const handleChange = (event) => {
     // 🦁 Update le state avec la nouvelle valeur
     setName(event.target.value);
+    // setNameHistory([...nameHistory, event.target.value]);
   };
-
+  
   const handleReverse = (event) => {
     setIsReversed(event.target.checked);
   }
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (name) setNameHistory((previousNameHistory) => ([...previousNameHistory, name]));
+    }, 1000)
+    return () => clearTimeout(delayDebounceFn)
+  }, [name]);
 
   return (
     <div>
@@ -34,6 +43,13 @@ const App = () => {
       />
       </label>
       <p>{name ? `Hello ${isReversed ? name.split('').reverse().join('') : name}` : 'Write your name'}</p>
+      <ul>
+        {
+          nameHistory.map((name, i) => (
+            <li key={i}>{name}</li>
+          ))
+        }
+      </ul>
     </div>
   );
 };
