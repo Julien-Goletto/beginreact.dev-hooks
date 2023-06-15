@@ -1,18 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const NAME_KEY = 'name';
 
 const useName = (defaultValue) => {
-  
+
   const getInitialName = (defaultValue) => localStorage.getItem(NAME_KEY) 
     ? localStorage.getItem(NAME_KEY) 
     : defaultValue;
   
   const [name, setName] = useState(() => getInitialName(defaultValue));
 
-  useEffect(() => {
+  const setValue = () => {
     localStorage.setItem(NAME_KEY, name);
-  }, [name]);
+  }
+
+  setValue();
 
   return [name, setName];
 
