@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const NAME_KEY = 'name';
 
@@ -36,13 +36,27 @@ const NameInput = ({ defaultValue }) => {
   );
 };
 
-const App = () => {
+const Counter = () => {
   const [counter, setCounter] = useState(0);
+  useEffect(() => {
+    const handleResize = () => {
+      setCounter((prev) => prev + 1);
+    }
+  
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  });
+
+  return(
+    <button onClick={() => setCounter(counter + 1)}>{counter}</button>
+  );
+}
+
+const App = () => {
 
   return (
     <div className="vertical-stack">
-      <button onClick={() => setCounter(counter + 1)}>{counter}</button>
-
+      <Counter />
       <NameInput defaultValue="" />
     </div>
   );
