@@ -1,17 +1,19 @@
-// 🦁 Ajout l'import de useEffect
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-// 🦁 Crée une variable `NAME_KEY` avec la valeur `name`
+const NAME_KEY = 'name';
 
 const NameInput = ({ defaultValue }) => {
-  // 🦁 Change la valeur par défaut en récupérant la valeur stockée dans le localStorage
-  // 💡 JSON.parse(localStorage.getItem(key))
-  // 🦁 Attention il faut vérifier que localStorage.getItem(key) n'est pas null sinon tu vas avoir une erreur !
-  // Si il est vide, tu peux utiliser la valeur par défaut
-  const [name, setName] = useState(defaultValue);
 
-  // 🦁 Dans un `useEffect` update la valeur stockée dans le localStorage.
-  // 💡 localStorage.setItem(key, JSON.stringify(name));
+  const getInitialName = (defaultValue) => localStorage.getItem(NAME_KEY) 
+    ? localStorage.getItem(NAME_KEY) 
+    : defaultValue;
+
+  const [name, setName] = useState(getInitialName(defaultValue));
+
+  useEffect(() => {
+    localStorage.setItem(NAME_KEY, name);
+  }, [name]);
+
 
   return (
     <label className="textfield">
