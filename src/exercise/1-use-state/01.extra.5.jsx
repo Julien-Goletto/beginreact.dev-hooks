@@ -40,7 +40,14 @@ const TodoForm = ({ addTodo }) => {
   );
 };
 
-const Counter = ({ count, increment }) => {
+const useCount = () => {
+  const [count, setCount] = useState(0);
+  const increment = () => setCount((p) => p + 1);
+  return { count, increment };
+}
+
+const Counter = () => {
+  const { count, increment } = useCount();
   return <button onClick={increment}>{count}</button>;
 };
 
@@ -100,14 +107,13 @@ const UserAnimalForm = () => {
 }
 
 const App = () => {
-  const [count, setCount] = useState(0);
   
   return (
     <div>
       <h2>TodoApp</h2>
       <Todo />
       <h2>Counter</h2>
-      <Counter count={count} increment={() => setCount((p) => p + 1)} />
+      <Counter />
       <UserAnimalForm />
       </div>
   );
