@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useId } from 'react';
 
 const NAME_KEY = 'name';
 
@@ -38,17 +38,26 @@ const NameInput = ({ defaultValue }) => {
 
 const Counter = () => {
   const [counter, setCounter] = useState(0);
+  const [active, setIsActive] = useState(true);
+
   useEffect(() => {
     const handleResize = () => {
+      if (!active) return;
       setCounter((prev) => prev + 1);
     }
   
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  });
+  }, [active]);
+
+  const inputId = useId();
 
   return(
-    <button onClick={() => setCounter(counter + 1)}>{counter}</button>
+    <>
+      <button onClick={() => setCounter(counter + 1)}>{counter}</button>
+      <label htmlFor={inputId}>Activer le compteur au resize ?</label>
+      <input type="checkbox" name="isActive" id={inputId} checked={active} onChange={() => setIsActive(!active)} />
+    </>
   );
 }
 
