@@ -8,12 +8,11 @@ const NameInput = ({ defaultValue }) => {
     ? localStorage.getItem(NAME_KEY) 
     : defaultValue;
 
-  const [name, setName] = useState(getInitialName(defaultValue));
+  const [name, setName] = useState(() => getInitialName(defaultValue));
 
   useEffect(() => {
     localStorage.setItem(NAME_KEY, name);
   }, [name]);
-
 
   return (
     <label className="textfield">
