@@ -1,12 +1,26 @@
 import { useState } from 'react';
 
-const Todos = ({ todos }) => (
-  <ul>
-    {todos.map((todo, i) => (
-      <li key={i}>{todo}</li>
-    ))}
-  </ul>
-);
+const useTodos = (defaultTodos = ['Learn React', 'Learn React Hooks']) => {
+  const [todos, setTodos] = useState(defaultTodos);
+  const addTodo = (todo) => {
+    setTodos([...todos, todo]);
+  };
+  return { todos, addTodo };
+}
+
+const Todo = () => {
+  const { todos, addTodo } = useTodos();
+  return (
+    <>
+      <ul>
+        {todos.map((todo, i) => (
+          <li key={i}>{todo}</li>
+        ))}
+      </ul>
+      <TodoForm addTodo={addTodo} />
+    </>
+  )
+}
 
 const TodoForm = ({ addTodo }) => {
   const handleSubmit = (e) => {
@@ -86,18 +100,12 @@ const UserAnimalForm = () => {
 }
 
 const App = () => {
-  const [todos, setTodos] = useState(['Learn React', 'Learn React Hooks']);
   const [count, setCount] = useState(0);
-
-  const addTodo = (todo) => {
-    setTodos([...todos, todo]);
-  };
-
+  
   return (
     <div>
       <h2>TodoApp</h2>
-      <Todos todos={todos} />
-      <TodoForm addTodo={addTodo} />
+      <Todo />
       <h2>Counter</h2>
       <Counter count={count} increment={() => setCount((p) => p + 1)} />
       <UserAnimalForm />
