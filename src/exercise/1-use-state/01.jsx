@@ -1,13 +1,14 @@
 // 🦁 add useState import
-// import { useState } from "react";
+import { useState } from "react";
 
 const App = () => {
   // 🦁 Remplace le name par un state
-  let name = '';
+  const [name, setName] = useState('');
 
   const handleChange = (event) => {
     // 🦁 Update le state avec la nouvelle valeur
-    // 💡 `event.target.value`
+    event.preventDefault();
+    setName(event.target.value);
   };
 
   return (
@@ -16,7 +17,9 @@ const App = () => {
         type="text"
         placeholder="Name"
         // 🦁 Ajoute la valeur
+        value={name}
         // 🦁 Ajoute le onChange pour update le state quand la valeur change
+        onChange={handleChange}
       />
       <p>{name ? `Hello ${name}` : 'Write your name'}</p>
     </div>
