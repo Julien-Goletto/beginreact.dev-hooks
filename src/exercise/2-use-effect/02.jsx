@@ -2,17 +2,25 @@ import { useState, useEffect } from 'react';
 
 const NAME_KEY = 'name';
 
-const NameInput = ({ defaultValue }) => {
-
+const useName = (defaultValue) => {
+  
   const getInitialName = (defaultValue) => localStorage.getItem(NAME_KEY) 
     ? localStorage.getItem(NAME_KEY) 
     : defaultValue;
-
+  
   const [name, setName] = useState(() => getInitialName(defaultValue));
 
   useEffect(() => {
     localStorage.setItem(NAME_KEY, name);
   }, [name]);
+
+  return [name, setName];
+
+}
+
+const NameInput = ({ defaultValue }) => {
+
+  const [name, setName] = useName(defaultValue);
 
   return (
     <label className="textfield">
