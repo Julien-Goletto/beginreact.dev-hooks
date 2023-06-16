@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */ // 🦁 Enlève cette ligne
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const useDebounce = (callback, time) => {
 
@@ -19,6 +19,15 @@ const fetchAgeByName = (name) => {
   return fetch(`https://api.agify.io/?name=${name}`).then((res) => res.json());
 };
 
+const useRenderCount = () => {
+  const renderCountRef = useRef(0);
+  useEffect(() => {
+    renderCountRef.current++;
+  })
+
+  return renderCountRef.current;
+}
+
 const App = () => {
   const [result, setResult] = useState(null);
   
@@ -29,6 +38,8 @@ const App = () => {
   }, 500);
 
   const inputRef = useRef(null);
+
+  const renderCount = useRenderCount();
 
   return (
     <div>
@@ -46,6 +57,7 @@ const App = () => {
           <b>{result.count}</b> people with this name.
         </div>
       ) : null}
+      <p>Nombre de rendus: {renderCount}</p>
     </div>
   );
 };
