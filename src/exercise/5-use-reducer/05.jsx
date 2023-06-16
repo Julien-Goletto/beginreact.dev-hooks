@@ -1,18 +1,30 @@
 import { useReducer } from 'react';
 
-const reducer = (value, action) => {
-  // 🦁 Ici il faut que tu return la valeur incrémenté de 1
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { 
+        ...state, 
+        value: state.value + 1,
+      };
+    case 'DECREMENT':
+      return { 
+        ...state, 
+        value: state.value - 1,
+      };
+    default:
+      return state;
+  }
 };
 
 const Counter = () => {
-  // 🦁 Remplace ceci par un useReducer avec `reducer` en paramètre et `0` en initialState
-  let count = 0;
+  const [state, dispatch] = useReducer(reducer, { value: 0 });
 
   return (
     <div>
-      <button>{count}</button>
-      {/* 🦁 Ajoute un `onClick` qui appel la fonction dispatch de notre reducer */}
-      <button>+</button>
+      <button>{state.value}</button>
+      <button onClick={() => dispatch({ type: 'INCREMENT'})}>+</button>
+      <button onClick={() => dispatch({ type: 'DECREMENT'})}>-</button>
     </div>
   );
 };
