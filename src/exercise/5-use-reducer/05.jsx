@@ -16,27 +16,17 @@ const reducer = (state, action) => {
     case REDUCER_ACTIONS.INCREMENT:
       return { 
         ...state, 
-        value: state.value + 1,
+        value: state.value + action.value,
       };
     case REDUCER_ACTIONS.DECREMENT:
       return { 
         ...state, 
-        value: state.value - 1,
+        value: state.value - action.value,
       };
     case REDUCER_ACTIONS.RESET:
       return { 
         ...state, 
         value: initialState.value,
-      };
-    case REDUCER_ACTIONS.PLUS_FIVE:
-      return { 
-        ...state, 
-        value: state.value + 5,
-      };
-    case REDUCER_ACTIONS.MINUS_FIVE:
-      return { 
-        ...state, 
-        value: state.value - 5,
       };
     default:
       return state;
@@ -49,10 +39,10 @@ const Counter = () => {
   return (
     <div>
       <button>{state.value}</button>
-      <button onClick={() => dispatch({ type: 'INCREMENT'})}>+</button>
-      <button onClick={() => dispatch({ type: 'PLUS_FIVE'})}>+ 5</button>
-      <button onClick={() => dispatch({ type: 'DECREMENT'})}>-</button>
-      <button onClick={() => dispatch({ type: 'MINUS_FIVE'})}>- 5</button>
+      <button onClick={() => dispatch({ type: 'INCREMENT', value: 1})}>+</button>
+      <button onClick={() => dispatch({ type: 'INCREMENT', value: 5})}>+ 5</button>
+      <button onClick={() => dispatch({ type: 'DECREMENT', value: 1})}>-</button>
+      <button onClick={() => dispatch({ type: 'DECREMENT', value: 5})}>- 5</button>
       <button onClick={() => dispatch({ type: 'RESET'})}>Reset</button>
     </div>
   );
