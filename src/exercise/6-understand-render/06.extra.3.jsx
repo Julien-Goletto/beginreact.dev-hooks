@@ -1,22 +1,22 @@
 import { useReducer } from 'react';
 import { useOnRenderStyle } from '../../toolbox/hooks/useOnRenderStyle.jsx';
 
-const Header = ({ count }) => {
+const Header = () => {
   const ref = useOnRenderStyle();
-
-  const HeaderInput = () => {
-    return (
-      <div>
-        <p>A counter in the header ? It's possible : {count}</p>
-        <input defaultValue="test" />
-      </div>
-    );
-  };
 
   return (
     <div ref={ref}>
       <h2>Header</h2>
       <HeaderInput />
+    </div>
+  );
+};
+
+const HeaderInput = ({ count }) => {
+  return (
+    <div>
+      <p>A counter in the header ? It's possible : {count}</p>
+      <input defaultValue="test" />
     </div>
   );
 };
