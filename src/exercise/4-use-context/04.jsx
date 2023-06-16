@@ -24,6 +24,14 @@ const ThemeProvider = ({children}) => {
   );
 };
 
+const useThemeContext = () => {
+  const themeContext = useContext(ThemeContext);
+  if (!themeContext) {
+    throw new Error('useThemeContext must be used within a ThemeProvider');
+  }
+  return themeContext;
+}
+
 const ThemedLayout = ({ children }) => {
   const { isDark } = useContext(ThemeContext)
   return (
@@ -34,22 +42,22 @@ const ThemedLayout = ({ children }) => {
 };
 
 const ForceLightMode = () => {
-  const { setLight } = useContext(ThemeContext)
+  const { setLight } = useThemeContext()
   return <button onClick={() => setLight()}>Force light</button>;
 };
 
 const ForceDarkMode = () => {
-  const { setDark } = useContext(ThemeContext)
+  const { setDark } = useThemeContext()
   return <button onClick={() => setDark()}>Force dark</button>;
 };
 
 const ToggleMode = () => {
-  const { toggle, isDark } = useContext(ThemeContext)
+  const { toggle, isDark } = useThemeContext()
   return <button onClick={toggle}>{isDark ? '🌞' : '🌙'}</button>;
 };
 
 const CurrentModeInfo = () => {
-  const { theme } = useContext(ThemeContext)
+  const { theme } = useThemeContext()
   return (
     <div>
       Current theme: <b>{theme}</b>
@@ -58,7 +66,7 @@ const CurrentModeInfo = () => {
 };
 
 const ForceThemeButtons = () => {
-  const { setLight, setDark } = useContext(ThemeContext);
+  const { setLight, setDark } = useThemeContext();
   return(
     <div style={{ marginTop: 32 }}>
       <ForceLightMode setLight={() => setLight()} />
