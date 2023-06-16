@@ -22,11 +22,13 @@ const fetchAgeByName = (name) => {
 const App = () => {
   const [result, setResult] = useState(null);
   
-  const onSearch = useDebounce((value) => {
-    fetchAgeByName(value).then((data) => {
+  const onSearch = useDebounce(() => {
+    fetchAgeByName(inputRef.current.value).then((data) => {
       setResult(data);
     });
   }, 500);
+
+  const inputRef = useRef(null);
 
   return (
     <div>
@@ -34,8 +36,9 @@ const App = () => {
         type="text"
         placeholder="Search bar"
         onChange={(event) => {
-          onSearch(event.target.value);
+          onSearch();
         }}
+        ref={inputRef}
       />
       {result ? (
         <div style={{ padding: 16 }}>
