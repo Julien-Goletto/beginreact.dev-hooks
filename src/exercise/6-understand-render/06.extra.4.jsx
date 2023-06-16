@@ -11,8 +11,10 @@ const SmallComponentTop = () => {
   );
 };
 
-const App = () => {
+const ScrollComponent = ({ topChildren, children}) => {
+
   const [scroll, setScroll] = useState(0);
+
   return (
     <div
       style={{ overflowY: 'scroll', height: '500px', paddingTop: '200px' }}
@@ -21,11 +23,19 @@ const App = () => {
       }}
     >
       <div style={{ height: '800px' }}>
-        <SmallComponentTop />
+        {topChildren}
         <p style={{ width: 'fit-content' }}>Hey, you scroll {scroll}</p>
-        <ExpensiveComponent />
+        {children}
       </div>
     </div>
+  );
+}
+
+const App = () => {
+  return (
+        <ScrollComponent topChildren={<SmallComponentTop/>}>
+          <ExpensiveComponent />
+        </ScrollComponent>
   );
 };
 
